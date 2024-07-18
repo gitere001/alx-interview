@@ -1,43 +1,50 @@
 #!/usr/bin/python3
-"""script that reads stdin line by line and computes metrics"""
+"""Script that reads stdin line by line and computes metrics"""
 
 import sys
 
-total_lines = 0
-total_file_size = 0
-status_code_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0,
-                     500: 0}
+# Initialize variables
+sum_file_size = 0
+status_code = {
+    '200': 0,
+    '301': 0,
+    '400': 0,
+    '401': 0,
+    '403': 0,
+    '404': 0,
+    '405': 0,
+    '500': 0
+}
+i = 0
 
 try:
+    # Read input line by line from stdin
     for line in sys.stdin:
-        parts = line.strip().split(' ')
-        if len(parts) < 7:
-            continue
+        parts = line.split()
+        if len(parts) > 2:
+            status_line = parts[-2]
+            file_size = parts[-1]
+            if status_line in status_code:
+                status_code[status_line] += 1
+            sum_file_size += int(file_size)
+            i += 1
 
-        try:
-            status_code = int(parts[-2])
-            file_size = int(parts[-1])
-        except ValueError:
-            continue
-
-        if status_code in status_code_count:
-            status_code_count[status_code] += 1
-
-        total_file_size += file_size
-        total_lines += 1
-
-        if total_lines == 10:
-            print(f"File size: {total_file_size}")
-            for code, value in sorted(status_code_count.items()):
-                if value > 0:
-                    print(f"{code}: {value}")
-            total_lines = 0
+            # Print metrics after every 10 lines
+            if i == 10:
+                print(f"File size: {sum_file_size}")
+                sorted_keys = sorted(status_code.keys())
+                for key in sorted_keys:
+                    if status_code[key] > 0:
+                        print(f"{key}: {status_code[key]}")
+                i = 0
 
 except KeyboardInterrupt:
     pass
 
 finally:
-    print(f"File size: {total_file_size}")
-    for code, value in sorted(status_code_count.items()):
-        if value > 0:
-            print(f"{code}: {value}")
+    # Print final metrics
+    print(f"File size: {sum_file_size}")
+    sorted_keys = sorted(status_code.keys())
+    for key in sorted_keys:
+        if status_code[key] > 0:
+            print(f"{key}: {status_code[key]}")
