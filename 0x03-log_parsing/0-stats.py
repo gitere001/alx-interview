@@ -34,10 +34,7 @@ try:
             total_lines = 0
 
 except KeyboardInterrupt:
-    print(f"File size: {total_file_size}")
-    for code, value in sorted(status_code_count.items()):
-        if value > 0:
-            print(f"{code}: {value}")
+    pass
 
 finally:
     print(f"File size: {total_file_size}")
