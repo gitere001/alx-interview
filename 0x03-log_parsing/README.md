@@ -5,31 +5,30 @@
 
 
 ## Concepts covered
-Concepts Needed:
-File I/O in Python:
+### File I/O in Python:
 
-how to read from sys.stdin line by line.
-[Python Input and Output](https://intranet.alxswe.com/rltoken/f7U2MDsBT_rd9AfUUaqVnQ)
+- how to read from sys.stdin line by line.
+- [Python Input and Output](https://intranet.alxswe.com/rltoken/f7U2MDsBT_rd9AfUUaqVnQ)
 ### Signal Handling in Python:
 
-Handling keyboard interruption (CTRL + C) using signal handling in Python.
-[Python Signal Handling](https://intranet.alxswe.com/rltoken/1nDqPJe80rSD-NMulzjJBw)
+- Handling keyboard interruption (CTRL + C) using signal handling in Python.
+- [Python Signal Handling](https://intranet.alxswe.com/rltoken/1nDqPJe80rSD-NMulzjJBw)
 ### Data Processing:
 
-Parsing strings to extract specific data points.
-Aggregating data to compute summaries.
+- Parsing strings to extract specific data points.
+- Aggregating data to compute summaries.
 ### Regular Expressions:
 
-Using regular expressions to validate the format of each line.
-[Python Regular Expressions](https://intranet.alxswe.com/rltoken/ZsD-YLisfaHFeMT_sZxX1Q)
+- Using regular expressions to validate the format of each line.
+- [Python Regular Expressions](https://intranet.alxswe.com/rltoken/ZsD-YLisfaHFeMT_sZxX1Q)
 ### Dictionaries in Python:
 
-Using dictionaries to count occurrences of status codes and accumulate file sizes.
-[Python Dictionaries](https://intranet.alxswe.com/rltoken/JM-RpavKkb8yanxWEnNYJw)
+- Using dictionaries to count occurrences of status codes and accumulate file sizes.
+- [Python Dictionaries](https://intranet.alxswe.com/rltoken/JM-RpavKkb8yanxWEnNYJw)
 ### Exception Handling:
 
-Handling possible exceptions that may arise during file reading and data processing.
-[Python Exceptions](https://intranet.alxswe.com/rltoken/OA2PlryrYA2gyCCKIsdgUw)
+- Handling possible exceptions that may arise during file reading and data processing.
+- [Python Exceptions](https://intranet.alxswe.com/rltoken/OA2PlryrYA2gyCCKIsdgUw)
 
 
 ## :pencil: Author
