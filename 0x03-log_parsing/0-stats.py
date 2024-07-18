@@ -15,7 +15,7 @@ def read_from_stdin():
     occurrences of each status code.
 
     If a line does not have enough parts or if the status code or file size
-    cannot be converted to integers, the line  is skipped.
+    cannot be converted to integers, the line is skipped.
 
     After processing 10 lines, the function prints the total file size and the
     status code statistics. It then resets the counters and continues
@@ -31,38 +31,26 @@ def read_from_stdin():
     """
     total_lines = 0
     total_file_size = 0
-    status_code_dict = {}
+    status_code_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0,
+                         405: 0, 500: 0}
     try:
-        while True:
-            line = sys.stdin.readline().strip()
-            if not line:
-                break
-
-            parts = line.split(" ")
-            if len(parts) < 7:
+        for line in sys.stdin:
+            parsed_line = line.strip().split()
+            if len(parsed_line) < 2:
                 continue
-
-            try:
-                status_code = int(parts[-2])
-                file_size = int(parts[-1])
-            except ValueError:
-                continue
-
-            if status_code in status_code_dict:
-                status_code_dict[status_code] += 1
-            else:
-                status_code_dict[status_code] = 1
-
-            total_lines += 1
-            total_file_size += file_size
-
-            if total_lines == 10:
-                print(f"File size: {total_file_size}")
-                for code, count in sorted(status_code_dict.items()):
-                    print(f"{code}: {count}")
-                total_lines = 0
-
+            code = int(parsed_line[-2]) if parsed_line[-2].isdigit() else None
+            file_size = int(parsed_line[-1]) if parsed_line[-1].isdigit() else None
+            if code is not None and file_size is not None:
+                if code in status_code_count:
+                    status_code_count[code] += 1
+                total_file_size += file_size
+                total_lines += 1
+                if total_lines == 10:
+                    total_lines = 0
+                    print(f"Total size: {total_file_size}")
+                    for code, value in sorted(status_code_count.items()):
+                        print(f"{code}: {value}")
     except KeyboardInterrupt:
-        print(f"File size: {total_file_size}")
-        for code, count in sorted(status_code_dict.items()):
-            print(f"{code}: {count}")
+        print(f"Total size: {total_file_size}")
+        for code, value in sorted(status_code_count.items()):
+            print(f"{code}: {value}")
