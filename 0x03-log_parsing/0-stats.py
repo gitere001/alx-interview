@@ -3,42 +3,44 @@
 
 import sys
 
-
-i = 0
-sum_file_size = 0
-status_code = {'200': 0,
-               '301': 0,
-               '400': 0,
-               '401': 0,
-               '403': 0,
-               '404': 0,
-               '405': 0,
-               '500': 0}
+total_lines = 0
+total_file_size = 0
+status_code_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0,
+                     500: 0}
 
 try:
     for line in sys.stdin:
-        args = line.split(' ')
-        if len(args) > 2:
-            status_line = args[-2]
-            file_size = args[-1]
-            if status_line in status_code:
-                status_code[status_line] += 1
-            sum_file_size += int(file_size)
-            i += 1
-            if i == 10:
-                print('File size: {:d}'.format(sum_file_size))
-                sorted_keys = sorted(status_code.keys())
-                for key in sorted_keys:
-                    value = status_code[key]
-                    if value != 0:
-                        print('{}: {}'.format(key, value))
-                i = 0
-except Exception:
-    pass
+        parts = line.strip().split(' ')
+        if len(parts) < 7:
+            continue
+
+        try:
+            status_code = int(parts[-2])
+            file_size = int(parts[-1])
+        except ValueError:
+            continue
+
+        if status_code in status_code_count:
+            status_code_count[status_code] += 1
+
+        total_file_size += file_size
+        total_lines += 1
+
+        if total_lines == 10:
+            print(f"File size: {total_file_size}")
+            for code, value in sorted(status_code_count.items()):
+                if value > 0:
+                    print(f"{code}: {value}")
+            total_lines = 0
+
+except KeyboardInterrupt:
+    print(f"File size: {total_file_size}")
+    for code, value in sorted(status_code_count.items()):
+        if value > 0:
+            print(f"{code}: {value}")
+
 finally:
-    print('File size: {:d}'.format(sum_file_size))
-    sorted_keys = sorted(status_code.keys())
-    for key in sorted_keys:
-        value = status_code[key]
-        if value != 0:
-            print('{}: {}'.format(key, value))
+    print(f"File size: {total_file_size}")
+    for code, value in sorted(status_code_count.items()):
+        if value > 0:
+            print(f"{code}: {value}")
